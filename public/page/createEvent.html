@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<style>
+  body {
+    font-family: 'Prompt', sans-serif;
+  }
+
+  .showimg {
+    height: 200px;
+    width: 200px;
+    border: 2px white solid;
+  }
+
+  .sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #080325;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+  .sidenav a {
+    padding: 6px 6px 20px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+  }
+
+  .sidenav a:hover {
+    color: #9D9D9D;
+  }
+
+  .main {
+    margin-left: 200px;
+    /* Same as the width of the sidenav */
+  }
+
+  .upload {
+    width: 100px;
+    border: 1px solid gray;
+    border-radius: 20%;
+    margin-left: 30px;
+  }
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 18px;
+    }
+  }
+</style>
+
+<body>
+  <div class="sidenav">
+    <img src="../img/login-logo-rm.png" alt="logo" width="200px">
+    <a href="home.html">หน้าต่างหลัก</a>
+    <a href="history.html">ประวัติการลงกิจกรรม</a>
+    <a href="../index.html">ออกจากระบบ</a>
+  </div>
+
+  <h1 style="padding-top: 50px; " class="d-flex justify-content-center">สร้างกิจกรรม</h1>
+  <hr>
+
+
+  <form id="addEvent">
+    <div class="form-group w-50 align-self-center mx-auto">
+      <label for="eventName"><b>ชื่อกิจกรรม</b></label>
+      <input type="text" placeholder="ระบุชื่อกิจกรรม" name="eventName" class="form-control">
+    </div>
+    
+    <div class="form-group w-50 mx-auto">
+      <label for="eventDetail"><b>รายละเอียดกิจกรรม</b></label>
+      <textarea name="eventDetail" id="eventDetail" cols="65" rows="8"
+        placeholder="เช่น งานลอยกระทงประจำปี 2567 สุดยิ่งใหญ่อลังกาล มาพร้อมขบวนจากคณะต่างๆของมหาวิทยาลัยขอนแก่น บูธอาหารที่หลากหลาย เครื่องเล่นบรรเทิง รวมไปถึงคอนเสิร์ตจาก 4EVE ณ วันที่ 15 พฤศจิกายน 2567 เวลา 18:00"></textarea>
+    </div>
+    <div class="form-group w-50 align-self-center mx-auto">
+      <label for="eventLocation"><b>สถานที่จัดกิจกรรม</b></label>
+      <input type="text" placeholder="ระบุสถานที่จัดกิจกรรม" name="eventLocation" class="form-control">
+    </div>
+
+    <br>
+    <div class="form-group my-3 d-flex justify-content-center">
+      <label for="meeting-time">วันเวลาเริ่มจัดกิจกรรม :</label>
+      <input type="datetime-local" id="startDate" name="startDate" value="2024-01-9T19:30" min="2022-06-07T00:00"
+        max="2030-06-14T00:00" />
+    </div>
+
+    <div class="form-group my-3 d-flex justify-content-center">
+      <br>
+      <label for="meeting-time">วันเวลาสิ้นสุดกิจกรรม :</label>
+      <input type="datetime-local" id="endDate" name="endDate" value="2024-01-9T19:30" min="2022-06-07T00:00"
+        max="2030-06-14T00:00" />
+    </div><br>
+
+    <div class="form-group w-50 align-self-center mx-auto">
+      <label for="category"><b>ประเภทกิจกรรม</b></label>
+            <select name="category" id="category" multiple>
+              <option value="physicalReconstruction">กายภาพบำบัด</option>
+              <option value="bloodcol">การบริจาคโลหิต</option>
+              <option value="contest">การประกวด</option>
+              <option value="education">การศึกษา/ให้ความรู้</option>
+              <option value="sport">กีฬา</option>
+              <option value="music">ดนตรี</option>
+              <option value="market">ตลาด</option>
+              <option value="lifeskill">ทักษะชีวิต</option>
+              <option value="recreation">นันทนาการ</option>
+              <option value="language">ภาษา</option>
+              <option value="culture">วัฒนธรรม</option>
+              <option value="healthy">สุขภาพ</option>
+              <option value="environmental">สิ่งแวดล้อม</option>
+              <option value="garden">สวนและต้นไม้</option>
+              <option value="book">หนังสือ</option>
+              <option value="food">อาหาร</option>
+            </select>  
+           <br>
+    </div>
+
+    <div class="form-group w-50 align-self-center mx-auto">
+      <label for="faculty"><b>คณะที่สามารถเข้าร่วมได้</b></label>
+            <select name="faculty" id="faculty" multiple>
+              <option value="all">ทุกคณะ</option>
+              <option value="AG">คณะเกษตรศาสตร์</option>
+              <option value="TE">คณะเทคโนโลยี</option>
+              <option value="EN">คณะวิศวกรรมศาสตร์</option>
+              <option value="SC">คณะวิทยาศาสตร์</option>
+              <option value="ARCH">คณะสถาปัตยกรรมศาสตร์</option>
+              <option value="CP">วิทยาลัยการคอมพิวเตอร์</option>
+              <option value="NU">คณะพยาบาลศาสตร์</option>
+              <option value="MED">คณะแพทยศาสตร์</option>
+              <option value="AMS">คณะเทคนิคการแพทย์</option>
+              <option value="PH">คณะสาธารณสุขศาสตร์</option>
+              <option value="DENT">คณะทันตแพทยศาสตร์</option>
+              <option value="PS">คณะเภสัชศาสตร์</option>
+              <option value="VM">คณะสัตวแพทยศาสตร์</option>
+              <option value="ED">คณะศึกษาศาสตร์</option>
+              <option value="HUSO">คณะมนุษยศาสตร์และสังคมศาสตร์</option>
+              <option value="KKBS">คณะบริหารธุรกิจและการบัญชี</option>
+              <option value="FA">คณะศิลปกรรมศาสตร์</option>
+              <option value="ECON">คณะเศรษฐศาสตร์</option>
+              <option value="LW">คณะนิติศาสตร์</option>
+              <option value="COLA">วิทยาลัยการปกครองท้องถิ่น</option>
+              <option value="KKUIC">วิทยาลัยนานาชาติ</option>
+              <option value="IS">วิทยาเขตหนองคาย</option>
+            </select>  
+           <br>
+    </div>
+  
+
+    <div class="form-group w-50 align-self-center mx-auto">
+          <label for=""><b>กรณีจำกัดจำนวนผู้เข้าร่วมโปรดระบุจำนวน : </b></label>
+          <input type="number" name="quantity" id="quantity" min="1"> คน
+    </div>
+    <br><br>
+
+    <div class="form-group w-50 align-self-center mx-auto">
+      <label for="userform"><b>ข้อมูลที่ท่านต้องการทราบหรือต้องการเก็บข้อมูลจากผู้เข้าร่วมกิจกรรม</b></label>
+            <select name="userform" id="userform" multiple>
+              <option value="EventWantFirstName">ชื่อ</option>
+              <option value="EventWantLastName">นามสกุล</option>
+              <option value="EventWantNumber">เบอร์โทรศัพท์</option>
+              <option value="EventWantFaculty">คณะที่ผู้เข้าร่วมกิจกรรมสังกัด</option>
+              <option value="EventWantKKUCode">รหัสนักศึกษา</option>
+            </select>  
+           <br>
+    </div>
+
+    <div class="form-group w-50 align-self-center mx-auto">
+      <h3><b>กรุณาเลือกรูปภาพของกิจกรรม</b></h3>
+    </div>
+
+
+    <div>
+      <br>
+      
+      <div class="d-flex justify-content-center">
+        <label>รูปภาพที่เลือก: </label> <input type="text" id="namebox"> <label id="extlab"></label>
+        <button id="selbtn" type="button" class="btn btn-secondary">เลือกรูปภาพ</button>
+        <button id="upbtn" type="button" class="btn btn-primary w-20">อัปโหลดรูปภาพ</button>
+      </div>
+      <br>
+      <div class="d-flex justify-content-center">
+        <label id="upprogress"></label>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <img id="myimg" class="showimg"> <br><br>
+  </div>
+
+    <hr>
+    <div class="form-group my-3 d-flex justify-content-center">
+      <button type="submit" class="btn btn-success w-20">สร้างกิจกรรม</button>
+    </div>
+  </form>
+  <script src="../script/createEvent.js" type="module"></script>
+  
+</body>
+
+</html>
