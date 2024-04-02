@@ -1,28 +1,32 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-import { getFirestore , collection, getDocs,addDoc,doc,updateDoc, setDoc,deleteDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
+import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBLXZ53TI5-g2Cy7JWi_WowSdqQ7ZAvin4",
-    authDomain: "kkuremindyou.firebaseapp.com",
-    projectId: "kkuremindyou",
-    storageBucket: "kkuremindyou.appspot.com",
-    messagingSenderId: "715076785074",
-    appId: "1:715076785074:web:7de6215548ff7f7e71caab",
-    measurementId: "G-97M74MVYG9"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBLXZ53TI5-g2Cy7JWi_WowSdqQ7ZAvin4",
+  authDomain: "kkuremindyou.firebaseapp.com",
+  projectId: "kkuremindyou",
+  storageBucket: "kkuremindyou.appspot.com",
+  messagingSenderId: "715076785074",
+  appId: "1:715076785074:web:7de6215548ff7f7e71caab",
+  measurementId: "G-97M74MVYG9"
+};
 
-  // ------------------- Initialize Firebase --------------------
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+// ------------------- Initialize Firebase --------------------
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app)
 
-  const db = getFirestore(app)
+const db = getFirestore(app)
 
-  const form = document.getElementById("addEvent")
-  const table = document.getElementById("table") 
+const form = document.getElementById("addEvent")
+const navbar = document.getElementById("navbar")
+const logout = document.getElementById("logout")
+
 //------------------------collection ref---------------------------
-const colRef = collection(db,"event")
+const colRef = collection(db, "event")
 
 var files = [];
 var reader = new FileReader();
@@ -32,93 +36,95 @@ var extlab = document.getElementById('extlab');
 var myimg = document.getElementById('myimg');
 var proglab = document.getElementById('upprogress');
 var SelBtn = document.getElementById('selbtn');
-var UpBtn = document.getElementById('upbtn');
+
 
 //----------------------Select image----------------------------
 var input = document.createElement('input');
-input.type = 'file' ;
+input.type = 'file';
 
-input.onchange = e =>{
-      files = e.target.files ;
+input.onchange = e => {
+  files = e.target.files;
 
-      var extention = GetFileExt(files[0]);
-      var name = GetFileName(files[0]);
+  var extention = GetFileExt(files[0]);
+  var name = GetFileName(files[0]);
 
-      namebox.value=name;
-      extlab.innerHTML = extention;
+  namebox.value = name;
+  extlab.innerHTML = extention;
 
-      reader.readAsDataURL(files[0]);
+  reader.readAsDataURL(files[0]);
 }
 
-reader.onload = function(){
+reader.onload = function () {
   myimg.src = reader.result;
 }
 
-SelBtn.onclick = function(){
+SelBtn.onclick = function () {
   input.click();
 }
 
-function GetFileExt(file){
+function GetFileExt(file) {
   var temp = file.name.split('.');
-  var ext = temp.slice((temp.length-1),(temp.length));
+  var ext = temp.slice((temp.length - 1), (temp.length));
   return '.' + ext[0];
 }
-function GetFileName(file){
+function GetFileName(file) {
   var temp = file.name.split('.');
-  var fname = temp.slice(0,-1).join('.');
+  var fname = temp.slice(0, -1).join('.');
   return fname;
 }
 
-async function UploadProcess (){
-    var ImgToUpload = files[0];
-    var ImgName = namebox.value + extlab.innerHTML;
+async function UploadProcess() {
+  var ImgToUpload = files[0];
+  var ImgName = namebox.value + extlab.innerHTML;
 
-    const metaData = {
-      contentType : ImgToUpload.type
-    }
+  const metaData = {
+    contentType: ImgToUpload.type
+  }
 
-    const storage = getStorage();
-    const storageRef = sRef(storage, "images/" + ImgName)
-    const UploadTask = uploadBytesResumable(storageRef,ImgToUpload,metaData);
+  const storage = getStorage();
+  const storageRef = sRef(storage, "images/" + ImgName)
+  const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
 
-    UploadTask.on('state-changed', (snapshot) =>{
-        var progess = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
-        proglab.innerHTML = "Upload " + progess + "%";
-        
-    },
+  UploadTask.on('state-changed', (snapshot) => {
+    var progess = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    proglab.innerHTML = "Upload " + progess + "%";
+
+  },
     (error) => {
       alert("error : Image not Uploaded! ");
     },
-    ()=> {
-      getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) =>{
+    () => {
+      getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
         const selectedCategories = Array.from(form.category.selectedOptions).map(option => option.value);
         const selectedFaculties = Array.from(form.faculty.selectedOptions).map(option => option.value);
-        const selectedUserform = Array.from(form.userform.selectedOptions).map(option => option.value);
-        addDoc(colRef,{
-            eventName: form.eventName.value ,
-            eventDetail:form.eventDetail.value,
-            eventLocation : form.eventLocation.value,
-            startDate : form.startDate.value,
-            endDate : form.endDate.value,
-            category: selectedCategories,
-            faculty: selectedFaculties,
-            quantity : form.quantity.value,
-            userform : selectedUserform,
-            ImageName : ImgName,
-            ImageURL : downloadURL
+
+        var isLimited = document.getElementById("toggleCheckbox").checked;
+
+        addDoc(colRef, {
+          eventName: form.eventName.value,
+          eventDetail: form.eventDetail.value,
+          eventLocation: form.eventLocation.value,
+          startDate: form.startDate.value,
+          endDate: form.endDate.value,
+          category: selectedCategories,
+          faculty: selectedFaculties,
+          isLimited: isLimited,
+          quantity: form.numberInput.value,
+          ImageName: ImgName,
+          ImageURL: downloadURL
         })
-        .then(() =>{
+          .then(() => {
             form.reset()
             alert("สร้างกิจกรรมเรียบร้อย/success!")
             window.location.href = "home.html";
-        }).catch((error)=>{
+          }).catch((error) => {
             alert("กรุณาใส่ข้อมูลให้ครบ")
-        });
+          });
 
-          },)
-  
+      },)
+
     }
-    )
+  )
 }
 
 
@@ -135,44 +141,63 @@ async function UploadProcess (){
 
 // adding document
 form.addEventListener('submit', (e) => {
-    e.preventDefault()
-    UploadProcess(); 
+  e.preventDefault()
+  UploadProcess();
 })
 
 new MultiSelectTag('category', {
-    rounded: true,   
-    placeholder: 'Search',  // default Search...
-    tagColor: {
-        textColor: '#327b2c',
-        borderColor: '#92e681',
-        bgColor: '#eaffe6',
-    },
-    onChange: function(values) {
-        console.log(values)
-    }
+  rounded: true,
+  placeholder: 'Search',  // default Search...
+  tagColor: {
+    textColor: '#327b2c',
+    borderColor: '#92e681',
+    bgColor: '#eaffe6',
+  },
+  onChange: function (values) {
+    console.log(values)
+  }
 })
 
 new MultiSelectTag('faculty', {
-    rounded: true,   
-    placeholder: 'Search',  // default Search...
-    tagColor: {
-        textColor: '#327b2c',
-        borderColor: '#92e681',
-        bgColor: '#eaffe6',
-    },
-    onChange: function(values) {
-        console.log(values)
-    }
+  rounded: true,
+  placeholder: 'Search',  // default Search...
+  tagColor: {
+    textColor: '#327b2c',
+    borderColor: '#92e681',
+    bgColor: '#eaffe6',
+  },
+  onChange: function (values) {
+    console.log(values)
+  }
 })
 
-new MultiSelectTag('userform', {
-    rounded: true,   
-    tagColor: {
-        textColor: '#327b2c',
-        borderColor: '#92e681',
-        bgColor: '#eaffe6',
-    },
-    onChange: function(values) {
-        console.log(values)
-    }
-})
+
+document.addEventListener("DOMContentLoaded", function () {
+  // เมื่อคลิกที่ id home-page
+  document.getElementById("home-page").addEventListener("click", function () {
+    // ไปที่หน้า home.html
+    window.location.href = "../page/home.html";
+  });
+
+  // เมื่อคลิกที่ id history-page
+  document.getElementById("history-page").addEventListener("click", function () {
+    // ไปที่หน้า history.html
+    window.location.href = "../page/history.html";
+  });
+
+  // เมื่อคลิกที่ปุ่ม "ออกจากระบบ"
+  document.getElementById("logout").addEventListener("click", function () {
+    signOut(auth).then(() => {
+      alert("ออกจากระบบเรียบร้อย");
+      // หลังจากออกจากระบบเสร็จเรียบร้อย ให้ redirect ไปยังหน้า index.html
+      window.location.href = "../index.html";
+    }).catch((error) => {
+      alert(error.message);
+    });
+  });
+});
+
+
+
+
+

@@ -15,6 +15,9 @@
 
 </head>
 <style>
+  #numberInput {
+    display: none;
+  }
   body {
     font-family: 'Prompt', sans-serif;
   }
@@ -37,18 +40,18 @@
     padding-top: 20px;
   }
 
-  .sidenav a {
-    padding: 6px 6px 20px 32px;
-    text-decoration: none;
-    font-size: 18px;
-    color: white;
-    display: block;
-  }
-
-  .sidenav a:hover {
-    color: #9D9D9D;
-  }
-
+  .sidenav h3 {
+          padding: 6px 6px 20px 32px;
+          text-decoration: none;
+          font-size: 18px;
+          color:white;
+          display: block;
+        }
+        
+        .sidenav h3:hover {
+          color: #9D9D9D;
+          cursor: pointer;
+        }
   .main {
     margin-left: 200px;
     /* Same as the width of the sidenav */
@@ -75,11 +78,13 @@
 <body>
   <div class="sidenav">
     <img src="../img/login-logo-rm.png" alt="logo" width="200px">
-    <a href="home.html">หน้าต่างหลัก</a>
-    <a href="history.html">ประวัติการลงกิจกรรม</a>
-    <a href="../index.html">ออกจากระบบ</a>
+    <br>
+    <h3 id="home-page">หน้าต่างหลัก</h3>
+    <h3 id="history-page">ประวัติการลงกิจกรรม</h3>
+    <button id="logout" class="logout-button">ออกจากระบบ</button>
   </div>
 
+  
   <h1 style="padding-top: 50px; " class="d-flex justify-content-center">สร้างกิจกรรม</h1>
   <hr>
 
@@ -166,24 +171,16 @@
             </select>  
            <br>
     </div>
-  
+
+
 
     <div class="form-group w-50 align-self-center mx-auto">
-          <label for=""><b>กรณีจำกัดจำนวนผู้เข้าร่วมโปรดระบุจำนวน : </b></label>
-          <input type="number" name="quantity" id="quantity" min="1"> คน
-    </div>
-    <br><br>
+      <label for="toggleCheckbox">กรณีจำกัดจำนวนคน : </label>
+      <input type="checkbox" id="toggleCheckbox">
 
-    <div class="form-group w-50 align-self-center mx-auto">
-      <label for="userform"><b>ข้อมูลที่ท่านต้องการทราบหรือต้องการเก็บข้อมูลจากผู้เข้าร่วมกิจกรรม</b></label>
-            <select name="userform" id="userform" multiple>
-              <option value="EventWantFirstName">ชื่อ</option>
-              <option value="EventWantLastName">นามสกุล</option>
-              <option value="EventWantNumber">เบอร์โทรศัพท์</option>
-              <option value="EventWantFaculty">คณะที่ผู้เข้าร่วมกิจกรรมสังกัด</option>
-              <option value="EventWantKKUCode">รหัสนักศึกษา</option>
-            </select>  
-           <br>
+      <!-- สร้าง input type number ที่จะแสดงหรือซ่อนตามการกด checkbox -->
+      <input type="number" id="numberInput" min="1">
+
     </div>
 
     <div class="form-group w-50 align-self-center mx-auto">
@@ -197,7 +194,6 @@
       <div class="d-flex justify-content-center">
         <label>รูปภาพที่เลือก: </label> <input type="text" id="namebox"> <label id="extlab"></label>
         <button id="selbtn" type="button" class="btn btn-secondary">เลือกรูปภาพ</button>
-        <button id="upbtn" type="button" class="btn btn-primary w-20">อัปโหลดรูปภาพ</button>
       </div>
       <br>
       <div class="d-flex justify-content-center">

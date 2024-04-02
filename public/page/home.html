@@ -1,118 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KKU Remind You</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KKU Remind You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <style>
-        body {
-            font-family: 'Prompt', sans-serif;
-        }
-        .button:hover {
-    cursor: pointer; /* เปลี่ยนรูปแบบ cursor เป็น pointer เมื่อ hover */
-        }
-        .sidenav {
-          height: 100%;
-          width: 200px;
-          position: fixed;
-          z-index: 1;
-          top: 0;
-          left: 0;
-          background-color: #080325;
-          overflow-x: hidden;
-          padding-top: 20px;
-        }
-          ul{
-              list-style-type: none;
-              padding: 0;
-          }
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+    }
 
-          li{
-              padding: 10px;
-              background: #f6f6f6;
-              font-size: 20px;
-              color: #555;
-              position: relative;
-              border-bottom: 2px solid #e6e6e6;
-              height: 110px;
-          }
+    .button:hover {
+      cursor: pointer;
+      /* เปลี่ยนรูปแบบ cursor เป็น pointer เมื่อ hover */
+    }
 
-          li:nth-child(even){
-              padding: 10px;
-              background: #f2f2f2;
-          }
+    .sidenav {
+      height: 100%;
+      width: 200px;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #080325;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
 
-          li span{
-              display: block;
-          }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
 
-          li span:nth-child(2){
-              font-size: 16px;
-              margin-top: 6px;
-              color: #999;
-          }
+    li {
+      padding: 10px;
+      background: #f6f6f6;
+      font-size: 20px;
+      color: #555;
+      position: relative;
+      border-bottom: 2px solid #e6e6e6;
+      height: 110px;
+    }
 
-        li div{
-            position: absolute;
-            top: 0;
-            right: 0px;
-            background: rgba(255,255,255,0.6);
-            width: 40px;
-            text-align: center;
-            padding: 10px 0;
-            font-weight:  bold;
-            cursor:  pointer;
-        }
-        .sidenav a {
-          padding: 6px 6px 20px 32px;
-          text-decoration: none;
-          font-size: 18px;
-          color:white;
-          display: block;
-        }
-        
-        .sidenav a:hover {
-          color: #9D9D9D;
-        }
-        
-        .main {
-          margin-left: 200px; /* Same as the width of the sidenav */
-        }
-        
-        @media screen and (max-height: 450px) {
-          .sidenav {padding-top: 15px;}
-          .sidenav a {font-size: 18px;}
-        }
-        </style>
+    li:nth-child(even) {
+      padding: 10px;
+      background: #f2f2f2;
+    }
+
+    li span {
+      display: block;
+    }
+
+    li span:nth-child(2) {
+      font-size: 16px;
+      margin-top: 6px;
+      color: #999;
+    }
+
+    li div {
+      position: absolute;
+      top: 0;
+      right: 0px;
+      background: rgba(255, 255, 255, 0.6);
+      width: 40px;
+      text-align: center;
+      padding: 10px 0;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .sidenav h3 {
+      padding: 6px 6px 20px 32px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+    }
+
+    .sidenav h3:hover {
+      color: #9D9D9D;
+      cursor: pointer;
+    }
+
+    .main {
+      margin-left: 200px;
+      /* Same as the width of the sidenav */
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    
-    <div class="sidenav">
-      <img src="../img/login-logo-rm.png" alt="logo" width="200px">
-      <a href="home.html">หน้าต่างหลัก</a>
-      <a href="history.html">ประวัติการลงกิจกรรม</a>
-      <a href="../index.html">ออกจากระบบ</a>
-    </div>
-    
-    <div class="main">
+
+  <div class="sidenav">
+    <img src="../img/login-logo-rm.png" alt="logo" width="200px">
+    <br>
+    <h3 id="home-page">หน้าต่างหลัก</h3>
+    <h3 id="history-page">ประวัติการลงกิจกรรม</h3>
+    <button id="logout" class="logout-button">ออกจากระบบ</button>
+  </div>
+
+  <div class="main">
+    <div>
+      <h1 style="padding-top: 50px; " class="form-group my-3 d-flex justify-content-center">KKU Remind You</h1>
+      <hr>
+
+
+
+      <div class="form-group my-3 d-flex justify-content-center">
         <div>
-          <h1 style="padding-top: 50px; " class="form-group w-50 align-self-center mx-auto">KKU Remind You</h1>  
-        <hr>
-
-
-        <div class="form-group w-50 align-self-center mx-auto">
-            <a href="createEvent.html"><button type="submit" class="btn btn-success">Create New Event</button></a>
+          <h3 id="welcome-message">สวัสดี</h3>
         </div>
-       <br><br>
+       
+      </div>
+       <div  class="form-group my-3 d-flex justify-content-center">
+          <a href="createEvent.html"><button type="submit" class="btn btn-success">Create New Event</button></a>
         </div>
-        
+      <br><br>
     </div>
+    <script type="module" src="../script/navbar.js"></script>
+  </div>
 </body>
+
 </html>

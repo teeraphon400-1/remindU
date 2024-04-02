@@ -92,21 +92,32 @@ async function UploadProcess (){
     },
     ()=> {
       getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) =>{
-        SaveURLtoFirestore(downloadURL);
+        const email = form.email.value
+        const password = form.password.value
+        
+        //write to firestore
+        addDoc(colRef,{
+          ProfileImageName : ImgName,
+          ProfileImageURL : downloadURL,
+          AdminEmail : email,
+          AdminPassword : password
+        })
+
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((result) => {
+            // form.reset()
+            // alert("สร้างบัญชีเรียบร้อย/success!")
+            console.log(result)
+
+          }).catch((error) => {
+            alert("กรุณาใส่ email และ passwordจะต้องไม่ต่ำกว่า 6 ตัวอักษร")
+          })
           },)
   
     }
     )
 }
-async function SaveURLtoFirestore(url){
-    var name = namebox.value;
-    var ext = extlab.innerHTML;
-    const ref = doc(clouddb,"img","eventImg");
-    await setDoc(ref,{
-      ImageName : (name+ext),
-      ImageURL : url
-    })
-  }
+
 
 //get collection data
 getDocs(colRef)
@@ -120,29 +131,10 @@ getDocs(colRef)
         console.log(err.message)
     })
 
-
-
 // adding document
 form.addEventListener('submit', (e) => {
     e.preventDefault()
-    UploadProcess();
-    addDoc(colRef,{
-        email: form.email.value ,
-        password: form.password.value,
-        account_name:form.account_name.value,
-        
-    })
-    const email = form.email.value
-    const password = form.password.value
-    createUserWithEmailAndPassword(auth,email,password)
-    
-    .then(() =>{
-        form.reset()
-        alert("สร้างบัญชีเรียบร้อย/success!")
-        
-    }).catch((error)=>{
-        alert("กรุณาใส่ email และ passwordจะต้องไม่ต่ำกว่า 6 ตัวอักษร")
-    })
+    UploadProcess(); 
     
 })
 
