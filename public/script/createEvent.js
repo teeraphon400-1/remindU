@@ -111,7 +111,8 @@ async function UploadProcess() {
           isLimited: isLimited,
           quantity: form.numberInput.value,
           ImageName: ImgName,
-          ImageURL: downloadURL
+          ImageURL: downloadURL,
+           uid: auth.currentUser.uid
         })
           .then(() => {
             form.reset()

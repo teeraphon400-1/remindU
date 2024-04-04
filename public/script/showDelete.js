@@ -1,7 +1,9 @@
 // Import the functions you need from the SDKs you need
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-import { getFirestore , collection , getDocs,addDoc,deleteDoc,doc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, setDoc, deleteDoc, getDoc ,query,where} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,11 +25,36 @@ const app = initializeApp(firebaseConfig);
 const table = document.getElementById("table") 
 const db = getFirestore(app)
 
-async function getEvents(db){
-    const eventCol = collection(db,'event')
-    const eventSnapshot = await getDocs(eventCol)
-    return eventSnapshot
+
+
+async function getEvents(db, auth){ 
+    const userId = auth.currentUser ? auth.currentUser.uid : null; 
+    if(userId) {
+        const eventCol = collection(db,'event');
+        const q = query(eventCol, where("uid", "==", userId));
+        const eventSnapshot = await getDocs(q);
+        return eventSnapshot;
+    } else {
+        return []; // Return an empty array if no user is logged in
+    }
 }
+
+// Function to handle authentication state change
+onAuthStateChanged(getAuth(app), async (user) => {
+    if (user) {
+        const auth = getAuth(app); // Get the auth object
+        const userEmail = user.email;
+        const data = await getEvents(db, auth); // Pass the auth object to getEvents function
+        data.forEach(event => {
+            showData(event);
+        });
+        console.log(user)
+    } else {
+        console.log('No users');
+    }
+});
+
+
 
 function showData(event){
     const row = table.insertRow(-1)
@@ -35,15 +62,13 @@ function showData(event){
     const eventLocationCol = row.insertCell(1)
     const startDateCol = row.insertCell(2)
     const endDateCol = row.insertCell(3)
-    const eventDetailCol = row.insertCell(4)
-    const deleteCol = row.insertCell(5)
+    const deleteCol = row.insertCell(4)
 
 
     nameCol.innerHTML = event.data().eventName
     eventLocationCol.innerHTML = event.data().eventLocation
     startDateCol.innerHTML = event.data().startDate
     endDateCol.innerHTML = event.data().endDate
-    eventDetailCol.innerHTML = event.data().eventDetail
     
 
     //สร้างปุ่มลบ
@@ -66,5 +91,9 @@ function showData(event){
 const data = await getEvents(db)
 data.forEach(event=>{
     showData(event)
+    
 })
 
+
+  
+  

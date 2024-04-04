@@ -13,6 +13,17 @@
         body {
             font-family: 'Prompt', sans-serif;
         }
+        .logout-button {
+            background-color: #080325;
+            color: white; /* ตั้งค่าสีตัวอักษรเป็นขาวหรือสีที่เหมาะสมกับพื้นหลัง */
+            border: none; /* ลบเส้นกรอบ */
+            margin-left: 28px;
+        }
+        .logout-button:hover {
+            color: #9D9D9D;
+      cursor: pointer;
+        }
+
         ul{
               list-style-type: none;
               padding: 0;
@@ -91,7 +102,7 @@
 </head>
 
 <body>
-    
+
   <div class="sidenav">
     <img src="../img/login-logo-rm.png" alt="logo" width="200px">
     <br>
@@ -109,13 +120,13 @@
             <th>สถานที่</th>
             <th>วันเริ่มกิจกรรม</th>
             <th>วันสิ้นสุดกิจกรรม</th>
-            <th>รายละเอียดกิจกรรม</th>
             <th>ลบข้อมูล</th>
         </tr>
     </table>
     </div>
     <script src="../script/showDelete.js" type="module"></script>
     <script type="module" src="../script/navbar.js"></script>
+   
     
 </body>
 </html>
