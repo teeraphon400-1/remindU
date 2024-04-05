@@ -1,56 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Prompt', sans-serif;
-        }
-        
-        .sidenav {
-          height: 100%;
-          width: 200px;
-          position: fixed;
-          z-index: 1;
-          top: 0;
-          left: 0;
-          background-color: #080325;
-          overflow-x: hidden;
-          padding-top: 20px;
-        }
-        
-        .sidenav h3 {
-          padding: 6px 6px 20px 32px;
-          text-decoration: none;
-          font-size: 18px;
-          color:white;
-          display: block;
-        }
-        
-        .sidenav h3:hover {
-          color: #9D9D9D;
-          cursor: pointer;
-        }
-        
-        .main {
-          margin-left: 200px; /* Same as the width of the sidenav */
-        }
-        
-        @media screen and (max-height: 450px) {
-          .sidenav {padding-top: 15px;}
-          .sidenav a {font-size: 18px;}
-        }
-        </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+    }
+
+    .sidenav {
+      height: 100%;
+      width: 200px;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #080325;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
+
+    .sidenav h3 {
+      padding: 6px 6px 20px 32px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+    }
+
+    .sidenav h3:hover {
+      color: #9D9D9D;
+      cursor: pointer;
+    }
+
+    .main {
+      margin-left: 200px;
+      /* Same as the width of the sidenav */
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    
+
   <div class="sidenav">
     <img src="../img/login-logo-rm.png" alt="logo" width="200px">
     <br>
@@ -58,12 +65,17 @@
     <h3>ประวัติการลงกิจกรรม</h3>
     <h3 id="logout">ออกจากระบบ</h3>
   </div>
-    
-    <div class="main">
-        <h1 style="padding-top: 50px; ">Dashboard</h1>
-        <hr>
-        <img src="../img/dashboard.png" alt="dashboard" width="1000px">
+
+  <div class="main">
+    <h1 style="padding-top: 50px; ">Dashboard</h1>
+    <h1>Event Details</h1>
+    <div id="eventDetails">
+        <!-- สร้าง element HTML เพื่อแสดงข้อมูลกิจกรรม -->
     </div>
-    
+
+  </div>
+
+  <script type="module" src="../script/dashboard.js"></script>
 </body>
+
 </html>

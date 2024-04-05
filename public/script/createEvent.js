@@ -112,7 +112,7 @@ async function UploadProcess() {
           quantity: form.numberInput.value,
           ImageName: ImgName,
           ImageURL: downloadURL,
-           uid: auth.currentUser.uid
+          uid: auth.currentUser.uid
         })
           .then(() => {
             form.reset()
@@ -171,6 +171,17 @@ new MultiSelectTag('faculty', {
     console.log(values)
   }
 })
+
+document.getElementById('toggleCheckbox').addEventListener('change', function() {
+  var numberInput = document.getElementById('numberInput');
+  if (this.checked) {
+    numberInput.style.display = 'block'; // แสดง input
+  } else {
+    numberInput.style.display = 'none'; // ซ่อน input
+    numberInput.value = ''; // ตัวเลือกเพิ่มเติม: ล้างค่าใน input เมื่อซ่อน
+  }
+});
+
 
 
 document.addEventListener("DOMContentLoaded", function () {

@@ -1,104 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ประวัติการลงกิจกรรม</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Prompt', sans-serif;
-        }
-        .logout-button {
-            background-color: #080325;
-            color: white; /* ตั้งค่าสีตัวอักษรเป็นขาวหรือสีที่เหมาะสมกับพื้นหลัง */
-            border: none; /* ลบเส้นกรอบ */
-            margin-left: 28px;
-        }
-        .logout-button:hover {
-            color: #9D9D9D;
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ประวัติการลงกิจกรรม</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+    }
+
+    .logout-button {
+      background-color: #080325;
+      color: white;
+      /* ตั้งค่าสีตัวอักษรเป็นขาวหรือสีที่เหมาะสมกับพื้นหลัง */
+      border: none;
+      /* ลบเส้นกรอบ */
+      margin-left: 28px;
+    }
+
+    .logout-button:hover {
+      color: #9D9D9D;
       cursor: pointer;
-        }
+    }
 
-        ul{
-              list-style-type: none;
-              padding: 0;
-          }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
 
-          li{
-              padding: 10px;
-              background: #f6f6f6;
-              font-size: 20px;
-              color: #555;
-              position: relative;
-              border-bottom: 2px solid #e6e6e6;
-              height: 110px;
-          }
+    li {
+      padding: 10px;
+      background: #f6f6f6;
+      font-size: 20px;
+      color: #555;
+      position: relative;
+      border-bottom: 2px solid #e6e6e6;
+      height: 110px;
+    }
 
-          li:nth-child(even){
-              padding: 10px;
-              background: #f2f2f2;
-          }
+    li:nth-child(even) {
+      padding: 10px;
+      background: #f2f2f2;
+    }
 
-          li span{
-              display: block;
-          }
+    li span {
+      display: block;
+    }
 
-          li span:nth-child(2){
-              font-size: 16px;
-              margin-top: 6px;
-              color: #999;
-          }
+    li span:nth-child(2) {
+      font-size: 16px;
+      margin-top: 6px;
+      color: #999;
+    }
 
-        li div{
-            position: absolute;
-            top: 0;
-            right: 0px;
-            background: rgba(255,255,255,0.6);
-            width: 40px;
-            text-align: center;
-            padding: 10px 0;
-            font-weight:  bold;
-            cursor:  pointer;
-        }
-        .sidenav {
-          height: 100%;
-          width: 200px;
-          position: fixed;
-          z-index: 1;
-          top: 0;
-          left: 0;
-          background-color: #080325;
-          overflow-x: hidden;
-          padding-top: 20px;
-        }
-        
-        .sidenav h3 {
-          padding: 6px 6px 20px 32px;
-          text-decoration: none;
-          font-size: 18px;
-          color:white;
-          display: block;
-        }
-        
-        .sidenav h3:hover {
-          color: #9D9D9D;
-          cursor: pointer;
-        }
-        
-        .main {
-          margin-left: 200px; /* Same as the width of the sidenav */
-        }
-        
-        @media screen and (max-height: 450px) {
-          .sidenav {padding-top: 15px;}
-          .sidenav a {font-size: 18px;}
-        }
-        </style>
+    li div {
+      position: absolute;
+      top: 0;
+      right: 0px;
+      background: rgba(255, 255, 255, 0.6);
+      width: 40px;
+      text-align: center;
+      padding: 10px 0;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .sidenav {
+      height: 100%;
+      width: 200px;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #080325;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
+
+    .sidenav h3 {
+      padding: 6px 6px 20px 32px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+    }
+
+    .sidenav h3:hover {
+      color: #9D9D9D;
+      cursor: pointer;
+    }
+
+    .showimg {
+      height: 300px;
+      width: 300px;
+      border: 2px white solid;
+    }
+
+    .main {
+      margin-left: 200px;
+      /* Same as the width of the sidenav */
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -111,22 +130,83 @@
     <button id="logout" class="logout-button">ออกจากระบบ</button>
   </div>
 
-    <div class="main">
-      <h1 style="padding-top: 50px; ">ประวัติการลงกิจกรรม</h1>
-      <hr>
-      <table class="table table-bordered" id="table">
-        <tr>
-            <th>ชื่อกิจกรรม</th>
-            <th>สถานที่</th>
-            <th>วันเริ่มกิจกรรม</th>
-            <th>วันสิ้นสุดกิจกรรม</th>
-            <th>ลบข้อมูล</th>
-        </tr>
+  <div class="main">
+    <h1 style="padding-top: 50px; ">ประวัติการลงกิจกรรม</h1>
+    <hr>
+    <table class="table table-bordered" id="table">
+      <tr>
+        <th>ชื่อกิจกรรม</th>
+        <th>สถานที่</th>
+        <th>วันเริ่มกิจกรรม</th>
+        <th>วันสิ้นสุดกิจกรรม</th>
+        <th>ลบข้อมูล</th>
+      </tr>
     </table>
+  </div>
+
+  <div id="detail" style="display: none;">
+    <br><br><br>
+    <div class="form-group w-50 align-self-center mx-auto">
+      <img id="myimg" class="showimg"> <br><br>
     </div>
-    <script src="../script/showDelete.js" type="module"></script>
-    <script type="module" src="../script/navbar.js"></script>
-   
-    
+    <div class="form-group w-50 align-self-center mx-auto">
+      <h4 id="eventName"><b>ชื่อกิจกรรม</b></h4> <br>
+    </div>
+
+
+    <div class="form-group w-50 align-self-center mx-auto">
+
+      <h6 id="eventLocation"><b>สถานที่จัดกิจกรรม</b></h6><br>
+    </div>
+
+
+    <div class="form-group w-50 align-self-center mx-auto">
+      <h6 id="eventDetail">รายละเอียดกิจกรรม</h6></b><br>
+    </div>
+
+
+    <div class="form-group w-50 align-self-center mx-auto">
+      <h6 id="startDate"><b>วันเวลาเริ่มจัดกิจกรรม</b></h6>
+    </div>
+
+
+    <div class="form-group w-50 align-self-center mx-auto">
+      <h6 id="endDate"><b>วันเวลาสิ้นสุดกิจกรรม</b></h6>
+    </div>
+
+    <div class="form-group w-50 align-self-center mx-auto">
+      <h6 id="eventCategory">ประเภทกิจกรรม</h6>
+    </div>
+
+    <div class="form-group w-50 align-self-center mx-auto">
+      <h6 id="eventFaculty">คณะที่สามารถเข้าร่วมได้</h6><br>
+    </div>
+    <div class="form-group w-50 align-self-center mx-auto">
+      <h6 id="eventIsLimited">จำกัดจำนวนคนเข้าร่วมกิจกรรม :</h6>
+      <h6 id="eventquantity">จำนวนคนที่จำกัด :</h6><br>
+    </div><hr>
+    <div class="form-group w-50 align-self-center mx-auto">
+      <h6 id="eventReserveCount" style="color: red;">จำนวนคนที่สนใจเข้าร่วมกิจกรรม :</h6>
+    </div><hr><br>
+
+
+
+
+
+
+
+    <!--
+      <h6 id="category">ประเภทกิจกรรม</h6><br>
+      <h6 id="faculty">คณะที่สามารถเข้าร่วมได้</h6><br>
+      <h6 id="isLimited">จำกัดจำนวน</h6><br>-->
+
+  </div>
+
+
+  <script src="../script/showDelete.js" type="module"></script>
+  <script type="module" src="../script/navbar.js"></script>
+
+
 </body>
+
 </html>

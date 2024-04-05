@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, setDoc, deleteDoc,getFirebaseAuth} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, setDoc, getDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
@@ -18,83 +18,28 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getFirebaseAuth(app); // Change to getFirebaseAuth
-
-const db = getFirestore(app)
 
 const table = document.getElementById("table") 
-// Function to handle authentication state change
-onAuthStateChanged(async (user) => {
-    if (user) {
-        const userEmail = user.email;
-        const data = await getEvents(db, auth);
-        data.forEach(event => {
-            showData(event);
-        });
-       
+
+
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
+
+async function tryReserve() {
+    const docRef = doc(db, 'event', 'd1dQDJMcBrAOf4l7xvH7');
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log(docSnap.data().reserveId.data)
+      console.log("Document data:", docSnap.data());
     } else {
-        console.log('No users');
+      console.log("No such document!");
     }
-});
-
-async function getEvents(db, auth){
-    const userId = auth.currentUser ? auth.currentUser.uid : null;
-    const eventCol = collection(db,'event');
-    const q = query(eventCol, where("uid", "==", userId));
-    const eventSnapshot = await getDocs(q);
-    return eventSnapshot;
 }
 
-function showData(event){
-    const row = table.insertRow(-1)
-    const nameCol = row.insertCell(0)
-    const eventLocationCol = row.insertCell(1)
-    const startDateCol = row.insertCell(2)
-    const endDateCol = row.insertCell(3)
-    const deleteCol = row.insertCell(4)
+tryReserve();
 
-    nameCol.innerHTML = event.data().eventName
-    eventLocationCol.innerHTML = event.data().eventLocation
-    startDateCol.innerHTML = event.data().startDate
-    endDateCol.innerHTML = event.data().endDate
 
-    let btn =document.createElement('button')
-    btn.textContent="ลบข้อมูล"
-    btn.setAttribute('class','btn btn-danger')
-    btn.setAttribute('data-id',event.id)
 
-    deleteCol.appendChild(btn)
-    btn.addEventListener('click',(e)=>{
-        let id = e.target.getAttribute('data-id');
-        deleteDoc(doc(db,'event',id)).then(() => {
-            location.reload();
-        });
-    })
-}
-
-const data = await getEvents(db)
-data.forEach(event=>{
-    showData(event)
-})
-
-document.addEventListener("DOMContentLoaded", function navbar() {
-    document.getElementById("home-page").addEventListener("click", function () {
-      window.location.href = "../page/home.html";
-    });
-  
-    document.getElementById("history-page").addEventListener("click", function () {
-      window.location.href = "../page/history.html";
-    });
-  
-    document.getElementById("logout").addEventListener("click", function () {
-        const auth = getFirebaseAuth(app); // Change to getFirebaseAuth
-        signOut(auth).then(() => {
-            alert("ออกจากระบบเรียบร้อย");
-            window.location.href = "../index.html";
-        }).catch((error) => {
-            alert(error.message);
-        });
-    });
-});
