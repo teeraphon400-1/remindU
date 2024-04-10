@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDoc, addDoc, doc, updateDoc, setDoc} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLXZ53TI5-g2Cy7JWi_WowSdqQ7ZAvin4",
@@ -23,19 +23,40 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+
+
 // ตรวจสอบสถานะการล็อกอิน
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
     // ผู้ใช้ล็อกอินแล้ว
     const userEmail = user.email; // รับอีเมลของผู้ใช้
     // // ตั้งค่าข้อความต้อนรับในหน้า HTML
     document.getElementById("welcome-message").innerText = `สวัสดี ${userEmail}`;
+
+    // ดึงรูปภาพของผู้ใช้และแสดงในหน้า HTML
+    const uid = user.uid; // รับ uid ของผู้ใช้
+    try {
+      const adminDoc = await getDoc(doc(db, "admin", uid));
+      if (adminDoc.exists()) {
+        const profileImageURL = adminDoc.data().ProfileImageURL;
+        if (profileImageURL) {
+          document.getElementById("myimg").src = profileImageURL;
+        } else {
+          console.log("No profile image found for the user.");
+        }
+      } else {
+        console.log("Admin document does not exist for the user.");
+      }
+    } catch (error) {
+      console.error("Error fetching admin document:", error);
+    }
   } else {
     // ผู้ใช้ไม่ได้ล็อกอิน หรือออกจากระบบแล้ว
     //document.getElementById("welcome-message").textContent = "ยินดีต้อนรับ, ผู้เยี่ยมชม";
     console.log("no users");
   }
 });
+
 // เหตุการณ์อื่นๆ ที่มีอยู่ในโค้ดของคุณ...
 
 document.addEventListener("DOMContentLoaded", function navbar() {
