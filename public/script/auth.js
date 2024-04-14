@@ -46,7 +46,7 @@ const logout = document.getElementById("logout");
 //login
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    window.location.href = "../page/home.html";
+    console.log(user)
   } else {
     profile.style.display = "none";
     formarea.style.display = "block";
@@ -103,70 +103,61 @@ function GetFileName(file) {
 //--------------------------------Upload Process-------------------------------
 
 async function UploadProcess() {
-  var ImgToUpload = files[0];
-  var ImgName = namebox.value + extlab.innerHTML;
+  try {
+    var ImgToUpload = files[0];
+    var ImgName = namebox.value + extlab.innerHTML;
 
-  const metaData = {
-    contentType: ImgToUpload.type,
-  };
+    const metaData = {
+      contentType: ImgToUpload.type,
+    };
 
-  const storage = getStorage();
-  const storageRef = sRef(storage, "images/" + ImgName);
-  const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
+    const storage = getStorage();
+    const storageRef = sRef(storage, "images/" + ImgName);
+    const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
 
-  UploadTask.on(
-    "state-changed",
-    (snapshot) => {
-      var progess = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      proglab.innerHTML = "Upload " + progess + "%";
-    },
-    (error) => {
-      alert("error : Image not Uploaded! ");
-    },
-    () => {
-      getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
-        const email = form.email.value;
-        const password = form.password.value;
-        const accountName = form.account_name.value;
+    // Wait for the upload to finish
+    const snapshot = await UploadTask;
+    const downloadURL = await getDownloadURL(snapshot.ref);
 
-        createUserWithEmailAndPassword(auth, email, password)
-          .then((cred) => {
-            const uid = cred.user.uid;
+    // Create user with email and password
+    const cred = await createUserWithEmailAndPassword(auth, form.email.value, form.password.value);
+    const uid = cred.user.uid;
 
-            // ตรวจสอบว่ามีเอกสารของผู้ใช้นี้ใน Firestore หรือไม่
-            const userDocRef = doc(db, "admin", uid);
-            return getDoc(userDocRef).then((docSnap) => {
-              if (docSnap.exists()) {
-                // ถ้ามีเอกสารของผู้ใช้นี้อยู่แล้ว ให้อัปเดตข้อมูล
-                return updateDoc(userDocRef, {
-                  ProfileImageName: ImgName,
-                  ProfileImageURL: downloadURL,
-                  AdminEmail: email,
-                  AdminPassword: password,
-                  PageName: accountName,
-                });
-              } else {
-                // ถ้ายังไม่มีเอกสารของผู้ใช้นี้ ให้สร้างใหม่
-                return setDoc(userDocRef, {
-                  ProfileImageName: ImgName,
-                  ProfileImageURL: downloadURL,
-                  AdminEmail: email,
-                  AdminPassword: password,
-                  PageName: accountName,
-                });
-              }
-            });
-          })
-          .then(() => {
-            alert("สร้างบัญชีผู้ใช้เรียบร้อย");
-          })
-          .catch((error) => {
-            alert(error.message);
-          });
+    // Prepare the document reference
+    const userDocRef = doc(db, "admin", uid);
+
+    // Check if document exists and update or set accordingly
+    // Check if document exists and update or set accordingly
+    const docSnap = await getDoc(userDocRef);
+    if (docSnap.exists()) {
+      // Update existing document
+      await updateDoc(userDocRef, {
+        ProfileImageName: ImgName,
+        ProfileImageURL: downloadURL,
+        AdminEmail: form.email.value,
+        AdminPassword: form.password.value,
+        PageName: form.account_name.value,
+      });
+    } else {
+      // Create new document
+      await setDoc(userDocRef, {
+        ProfileImageName: ImgName,
+        ProfileImageURL: downloadURL,
+        AdminEmail: form.email.value,
+        AdminPassword: form.password.value,
+        PageName: form.account_name.value,
       });
     }
-  );
+
+    alert("สร้างบัญชีผู้ใช้เรียบร้อย");
+    window.location.href = "../page/home.html";
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    alert(error.message);
+  }
 }
+
+
 
 //======================= "submiy form========================="
 

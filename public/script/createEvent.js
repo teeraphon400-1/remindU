@@ -115,12 +115,14 @@ async function UploadProcess() {
 
         var isLimited = document.getElementById("toggleCheckbox").checked;
 
+        const startDate = form.startDate.value + "T" + form.startTime.value;
+        const endDate = form.endDate.value + "T" + form.endTime.value;
         addDoc(colRef, {
           eventName: form.eventName.value,
           eventDetail: form.eventDetail.value,
           eventLocation: form.eventLocation.value,
-          startDate: form.startDate.value,
-          endDate: form.endDate.value,
+          startDate : startDate,
+          endDate : endDate,
           category: selectedCategories,
           faculty: selectedFaculties,
           isLimited: isLimited,
@@ -141,17 +143,6 @@ async function UploadProcess() {
     }
   );
 }
-
-// async function SaveURLtoFirestore(url){
-//     const ref = doc(db,"img","eventImg");
-//     var name = namebox.value;
-//     var ext = extlab.innerHTML;
-//     await setDoc(ref,{
-//       ImageName : (name+ext),
-//       ImageURL : url
-//     })
-//   }
-
 // adding document
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -220,3 +211,4 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 });
+
