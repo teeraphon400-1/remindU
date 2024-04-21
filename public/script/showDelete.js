@@ -185,6 +185,13 @@ function showData(event) {
             // ถ้าไม่มีฟิลด์ reserveId หรือ reserveId ไม่มีค่า หรือมีค่าเป็น []
             document.getElementById("eventReserveCount").innerHTML = `ยังไม่มีการกดสนใจเข้าร่วมกิจกรรมนี้`;
           }
+
+          if (eventData.checkInId && eventData.checkInId.length > 0) {
+            document.getElementById("eventCheckInCount").innerHTML = `จำนวนคนที่เข้าร่วมกิจกรรม: ${eventData.checkInId.length}`;
+          } else {
+            // ถ้าไม่มีฟิลด์ reserveId หรือ reserveId ไม่มีค่า หรือมีค่าเป็น []
+            document.getElementById("eventCheckInCount").innerHTML = `ยังไม่มีการกดสนใจเข้าร่วมกิจกรรมนี้`;
+          }
           showReserve();
           showComment();
           showCheckin();
