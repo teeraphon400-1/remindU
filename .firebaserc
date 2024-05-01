@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "kkuremindyou"
-  }
+  },
+  "targets": {
+    "kkuremindyou": {
+      "hosting": {
+        "admin": [
+          "kkuremindyou-admin"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
